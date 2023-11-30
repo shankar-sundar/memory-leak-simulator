@@ -1,0 +1,62 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: memory-leak-simulator-bc
+labels:
+  template: memory-leak-simulator-bc
+objects:
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    labels:
+      app: "${NAME}"
+      app.kubernetes.io/component: "${NAME}"
+      app.kubernetes.io/version: "${VERSION}"
+    name: "${NAME}"
+  spec:
+    lookupPolicy:
+      local: true
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    labels:
+      app: "${NAME}"
+      app.kubernetes.io/component: "${NAME}"
+      app.kubernetes.io/version: "${VERSION}"
+    name: "${NAME}"
+  spec:
+    failedBuildsHistoryLimit: 5
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: ${NAME}:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      contextDir: memory-leak-simulator-app
+      git:
+        uri: https://github.com/shankar-sundar/memory-leak-simulator
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: ubi8-openjdk-17-runtime:1.12
+      type: Source
+    successfulBuildsHistoryLimit: 5
+    triggers:
+    - type: ConfigChange
+    - type: ImageChange
+parameters:
+- description: Name that will be given to all the resources
+  displayName: Name
+  name: NAME
+  required: true
+  value: "memory-leak-simulator"
+- description: Version that will be given to all the resources
+  displayName: Version
+  name: VERSION
+  required: true
+  value: '1.0.0'
