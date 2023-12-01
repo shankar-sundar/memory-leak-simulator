@@ -7,11 +7,11 @@
 #
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.jvm -t quarkus/mem-leak-simulator-jvm .
+# docker build -f src/main/docker/Dockerfile.jvm -t quarkus/memory-leak-simulator-jvm .
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 quarkus/mem-leak-simulator-jvm
+# docker run -i --rm -p 8080:8080 quarkus/memory-leak-simulator-jvm
 #
 # If you want to include the debug port into your docker image
 # you will have to expose the debug port (default 5005 being the default) like this :  EXPOSE 8080 5005.
@@ -20,7 +20,7 @@
 #
 # Then run the container using :
 #
-# docker run -i --rm -p 8080:8080 quarkus/mem-leak-simulator-jvm
+# docker run -i --rm -p 8080:8080 quarkus/memory-leak-simulator-jvm
 #
 # This image uses the `run-java.sh` script to run the application.
 # This scripts computes the command line to execute your Java application, and
@@ -77,7 +77,7 @@
 #   accessed directly. (example: "foo.example.com,bar.example.com")
 #
 ###
-FROM registry.access.redhat.com/ubi8/openjdk-17:1.12
+FROM registry.access.redhat.com/ubi9/openjdk-17-runtime:1.17
 
 ENV LANGUAGE='en_US:en'
 
