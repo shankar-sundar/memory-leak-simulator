@@ -43,7 +43,7 @@ objects:
       sourceStrategy:
         from:
           kind: ImageStreamTag
-          name: ubi9-openjdk-17:1.12
+          name: ubi9-openjdk-17:1.17
       type: Source
     successfulBuildsHistoryLimit: 5
     triggers:
